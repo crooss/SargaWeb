@@ -3,7 +3,7 @@
   <head>
     <title>deck.gl + Mapbox Integration</title>
 
-    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <script src="https://unpkg.com/deck.gl@^6.2.0/deckgl.min.js"></script>
     <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v1.9.1/mapbox-gl.js"></script>
@@ -11,20 +11,41 @@
     
     <link rel="stylesheet" type="text/css" href="https://api.tiles.mapbox.com/mapbox-gl-js/v1.9.1/mapbox-gl.css">
     <link rel='stylesheet' href='CSS/estilos.css'/>
-<style type="text/css">
-        body {
-          width: 100vw;
-          height: 100vh;
-          margin: 0;
-          overflow: hidden;
-        }
+
+    <style type="text/css">
+       
     </style>
     
 </head>
   <body>
-    <div id="map" style="width: 100vw; height: 100vh"></div>
-    <div id='coordenadas'></div>
-  </body>
+  <div class="main">
+      <button class="openbtn" onclick="openNav()">Menu</button>  
+    <div id="map"></div>
+      <div id='coordenadas'></div>
+  </div>
+  
+  <div id="mySidebar" class="sidebar">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">X</a>
+    <a href="#">Fechas</a>
+  </div>
+
+
+
+  <script>
+  function openNav() {
+      document.getElementById("mySidebar").style.width = "250px";
+      document.getElementById("main").style.marginLeft = "250px";
+    }
+    
+    function closeNav() {
+      document.getElementById("mySidebar").style.width = "0";
+      document.getElementById("main").style.marginLeft= "0";
+    }
+  </script>
+  
+
+
+
   <script type="text/javascript">
     const {MapboxLayer, GeoJsonLayer} = deck;
 
@@ -111,4 +132,6 @@
 
 
   </script>
+
+</body>
 </html>

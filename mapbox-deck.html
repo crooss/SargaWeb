@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
   <head>
-    <title>deck.gl + Mapbox Integration</title>
+    <title>deck.gl + Mapbox</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -11,6 +11,15 @@
     
     <link rel="stylesheet" type="text/css" href="https://api.tiles.mapbox.com/mapbox-gl-js/v1.9.1/mapbox-gl.css">
     <link rel='stylesheet' href='CSS/estilos.css'/>
+    
+    <!-- // CSS bootstrap -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/css/gijgo.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/js/gijgo.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/js/messages/messages.es-es.js"></script>
 
     <style type="text/css">
        
@@ -18,34 +27,22 @@
     
 </head>
   <body>
+
+
   <div class="main">
-      <button class="openbtn" onclick="openNav()">Menu</button>  
-    <div id="map"></div>
-      <div id='coordenadas'></div>
-  </div>
+    <button class="openbtn" onclick="openNav()">Menú</button>  
+    <div id="map">
+      <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"> x </a>
+        <a href="#">Fecha</a>
+        <input id="datepicker" width="200" value="01/05/2020">
+        <p id="dia">día</p>
+      </div> 
   
-  <div id="mySidebar" class="sidebar">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"> x </a>
-    <a href="#">Fechas</a>
+    </div>
+    <div id='coordenadas'></div>
   </div>
-
-
-
-  <script>
-  function openNav() {
-      document.getElementById("mySidebar").style.width = "250px";
-      document.getElementById("main").style.marginLeft = "250px";
-    }
     
-    function closeNav() {
-      document.getElementById("mySidebar").style.width = "0";
-      document.getElementById("main").style.marginLeft= "0";
-    }
-  </script>
-  
-
-
-
   <script type="text/javascript">
     const {MapboxLayer, GeoJsonLayer} = deck;
 
@@ -64,8 +61,7 @@
     const myDeckLayer = new MapboxLayer({
       id: 'my-scatterplot',
       type: GeoJsonLayer,
-      //Nombre del archivo en la carpeta data, contiene la fecha ej: 20190716
-      data: './data/Repro_T16QEJ_20190716T160839_AFAI_0.0015.geojson',
+      data: './data/Repro_T16QEJ_20200107T161641_AFAI_0.01.geojson',
       opacity: 1,
       stroked: true,
       filled: true,
@@ -90,22 +86,25 @@
               height: "180px",
               style: "mapbox://styles/mapbox/streets-v8",
               center: [-84, 21.18],
-              zoom: 6,
+              zoom: 5,
 
               // should be a function; will be bound to Minimap
-              zoomAdjust:null,
+              zoomAdjust: null,
               // if parent map zoom >= 18 and minimap zoom >= 14, set minimap zoom to 16
               zoomLevels:[
-                  [18, 14, 15],
+                  [18, 14, 16],
                   [16, 12, 13],
                   [14, 10, 12],
                   [12, 8, 11],
                   [10, 6, 7],
                   [8,5,3],
                   [6,4,2],
-                  [4,3,1],
-                  [2,2,0],
-                  [1,1,0],
+                  [4,3,1.5],
+                  [2,2,1],
+                  [1,1,0.5],
+                  [0,0,0],
+                  [1,0,1],
+                  [2,1,2],
                   ],
 
               lineColor: "#08F",
@@ -131,8 +130,32 @@
         document.getElementById('coordenadas').innerHTML = JSON.stringify(e.lngLat);
     });
 
+    //datepicker
+    $('#datepicker').datepicker({
+      uiLibrary: 'bootstrap4',
+      format: 'dd/mm/yyyy',
+      locale: 'es-es',
+    });
 
+
+    //Funciones del datepicker
+    function openNav() {
+      document.getElementById("mySidebar").style.width = "250px";
+      document.getElementById("main").style.marginLeft = "250px";
+    }
+
+    function get_dia() {
+      var valor= document.getElementById("datepicker").value;
+      document.getElementById("dia").innerHTML= valor;
+    }  
+
+    function closeNav() {
+        document.getElementById("mySidebar").style.width = "0";
+        document.getElementById("main").style.marginLeft= "0";
+    }
   </script>
-
+  
 </body>
+
+
 </html>
